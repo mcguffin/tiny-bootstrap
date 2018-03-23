@@ -49,12 +49,14 @@ function concat_js( src, dest ) {
 
 gulp.task('scss', function() {
 	return [
+		do_scss('admin/mce/tiny-bootstrap-editor')
 	];
 });
 
 
 gulp.task('js-admin', function() {
     return [
+		do_js('admin/mce/tiny-bootstrap-plugin')
     ];
 
 });
@@ -72,6 +74,6 @@ gulp.task('build', ['scss','js','js-admin'] );
 gulp.task('watch', function() {
 	// place code for your default task here
 	gulp.watch('./src/scss/**/*.scss',[ 'scss' ]);
-	gulp.watch('./src/js/**/*.js',[ 'js', 'js-admin' ]);
+	gulp.watch('./src/js/**/*.js',[ 'js-admin' ]);
 });
 gulp.task('default', ['build','watch']);

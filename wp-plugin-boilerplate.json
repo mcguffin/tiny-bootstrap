@@ -1,0 +1,22 @@
+{
+  "modules": {
+    "autoupdate": {},
+    "core": {
+      "css": true
+    },
+    "git": {},
+    "gulp": {},
+    "shortcode": {
+      "foo": {
+        "mce": true
+      }
+    }
+  },
+  "plugin_author": "J\u00f6rn Lund",
+  "plugin_author_uri": "",
+  "plugin_name": "Tiny Bootstrap",
+  "plugin_namespace": "TinyBootstrap",
+  "plugin_slug": "tiny_bootstrap",
+  "this_year": 2018,
+  "wp_plugin_slug": "tiny-bootstrap"
+}

@@ -53,16 +53,16 @@ Core\Core::instance();
 
 
 
-
-
-
-
-
 if ( is_admin() || defined( 'DOING_AJAX' ) ) {
 
+	Admin\Mce\MceBootstrap::instance();
+
+	// don't WP-Update actual repos!
+	if ( ! file_exists( TINY_BOOTSTRAP_DIRECTORY . '/.git/' ) ) {
+		AutoUpdate\AutoUpdateGithub::instance();
+	}
 
 
 
 
 }
-

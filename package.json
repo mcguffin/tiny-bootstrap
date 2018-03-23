@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com//tiny-bootstrap#readme",
   "devDependencies": {
+    "bootstrap": "^4.0.0",
     "gulp": "*",
     "gulp-autoprefixer": "*",
     "gulp-concat": "*",
