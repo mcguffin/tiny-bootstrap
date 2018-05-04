@@ -1,17 +1,7 @@
 Tiny Bootstrap
 ===============
 
-ToDo:
------
- - [ ] Wrap / Unwrap DIV
- - [ ] Badge
- - [ ] Link-Badge
- - [ ] Tooltip
- - [ ] list-group > list-group-item, .list-group-flush
- - [ ] jumbotron?
- - [ ] Carousel? (wp-gallery?)
- - [ ] btn-group?
- - [ ] btn-outline
- - [ ] responsive visibility
- - [ ] text-justify
- - [ ] text-lowercase, uppercase, capitalize
+WordPress Plugin which adds Bootstrap classes to WordPress TinyMCE.
+
+This plugin is still a stub and maybe to be completed in the future.  
+Please don't send bug reports by this time.
