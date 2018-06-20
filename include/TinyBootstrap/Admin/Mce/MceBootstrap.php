@@ -27,8 +27,16 @@ class MceBootstrap extends Mce {
 	 *	@inheritdoc
 	 */
 	protected function __construct() {
+		add_action( 'admin_init', array( $this, 'setup') );
+		$this->plugin_params = array();
 
+		parent::__construct();
+	}
 
+	/**
+	 *	@action admin_init
+	 */
+	public function setup() {
 		$bootstrap_classes = array(
 			'a,button'	=> array(
 				'title'		=> __( 'Link style', 'mcguffin' ),
@@ -132,6 +140,5 @@ class MceBootstrap extends Mce {
 			'classes'	=> apply_filters( 'tiny_bootstrap_classes', $bootstrap_classes ),
 		);
 
-		parent::__construct();
 	}
 }
