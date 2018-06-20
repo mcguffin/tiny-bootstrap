@@ -21,7 +21,10 @@ bootstrapPluginCallback = function( editor ){
 					classesBtn.menu.remove();
 					classesBtn.menu = null;
 				}
-				classesBtn.state.data.menu = classesBtn.settings.menu = classSet.classes;
+
+				classesBtn.state.set( 'menu', classSet.classes );
+				classesBtn.settings.values = classSet.classes;
+
 				editable = true;
 
 				classesBtn.value( $el.attr( 'class' ) || '' );
@@ -29,6 +32,7 @@ bootstrapPluginCallback = function( editor ){
 			}
 		} );
 		classesBtn.disabled( ! editable );
+		classesBtn.reflow();
 	}
 
 
@@ -40,6 +44,7 @@ bootstrapPluginCallback = function( editor ){
 			if ( ! $el.is( classSet.selector ) ) {
 				$el = $( editor.dom.getParent( selection , classSet.selector ) );
 			}
+
 			if ( $el.is( classSet.selector ) ) {
 				if ( value !== '' ) {
 					$el.attr( 'class', value );
@@ -59,14 +64,16 @@ bootstrapPluginCallback = function( editor ){
 		menu_button : true,
 		classes : 'widget btn fixed-width',
 		onselect: function(e) {
-			setElementClasses( this.value() );
+			setElementClasses( e.control.value() );
 		},
 		values: [],
 		onPostRender: function() {
 			classesBtn = this;
 
 			editor.on( 'nodechange', function( event ) {
+				console.log('-nodechange-')
 				setSelection( );
+				console.log('-nodechanged-')
 			});
 		}
 
