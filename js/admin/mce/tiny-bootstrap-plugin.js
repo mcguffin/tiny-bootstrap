@@ -71,9 +71,7 @@ bootstrapPluginCallback = function( editor ){
 			classesBtn = this;
 
 			editor.on( 'nodechange', function( event ) {
-				console.log('-nodechange-')
 				setSelection( );
-				console.log('-nodechanged-')
 			});
 		}
 
