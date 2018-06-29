@@ -1,8 +1,6 @@
-var bootstrapPluginCallback;
+(function($){
 
-//(function($){
-
-bootstrapPluginCallback = function( editor ){
+var bootstrapPluginCallback = function( editor ){
 	var classesBtn, $ = jQuery,
 		l10n = mce_tiny_bootstrap.l10n,
 		classes = mce_tiny_bootstrap.classes;
@@ -32,7 +30,7 @@ bootstrapPluginCallback = function( editor ){
 			}
 		} );
 		classesBtn.disabled( ! editable );
-		classesBtn.reflow();
+//		classesBtn.reflow();
 	}
 
 
@@ -81,4 +79,4 @@ bootstrapPluginCallback = function( editor ){
 tinymce.PluginManager.add( 'tiny-bootstrap', bootstrapPluginCallback );
 
 
-//})(jQuery);
+})(jQuery);
