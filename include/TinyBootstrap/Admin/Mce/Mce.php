@@ -159,7 +159,7 @@ abstract class Mce extends Core\Singleton {
 		$js_settings = array() + $this->mce_settings;
 
 		// add editor css
-		if ( $this->editor_css ) {
+		if ( $this->editor_css && apply_filters( 'tiny_bootstrap_enqueue_editor_css', true ) ) {
 			$js_settings = wp_parse_args( $js_settings, array(
 				'content_css'	=> $this->get_mce_css_url(),
 			) );
@@ -268,7 +268,9 @@ abstract class Mce extends Core\Singleton {
 	 *	@filter mce_css
 	 */
 	public function mce_css( $styles ) {
-		$styles .= ','. $this->get_mce_css_url();
+		if ( apply_filters( 'tiny_bootstrap_enqueue_editor_css', true ) ) {
+			$styles .= ','. $this->get_mce_css_url();			
+		}
 		return $styles;
 	}
 
