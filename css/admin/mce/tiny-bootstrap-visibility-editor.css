@@ -1,0 +1,42 @@
+/* Both Admin Menu and Post Formats */
+/* Post Format Icons */
+/* Welcome Screen Icons */
+/* Image Editing Icons */
+/* Both Image Editing and TinyMCE */
+/* TinyMCE Icons */
+/* Post Icons */
+/* Sorting */
+/* WPorg specific icons: Jobs, Profiles, WordCamps */
+/* Internal/Products */
+/* Taxonomies */
+/* Widget icons */
+/* Media icons */
+/* Alerts/Notifications/Flags */
+/* Social Icons */
+/* Misc/CPT */
+.mce-content-body .d-none.d-sm-block,
+.mce-content-body .d-sm-none,
+.mce-content-body .hidden-xs,
+.mce-content-body .visible-xs {
+  border: 1px dotted #ccc;
+  position: relative; }
+  .mce-content-body .d-none.d-sm-block::before,
+  .mce-content-body .d-sm-none::before,
+  .mce-content-body .hidden-xs::before,
+  .mce-content-body .visible-xs::before {
+    font-family: dashicons;
+    color: #ccc;
+    position: absolute;
+    font-size: 32px;
+    line-height: 1em;
+    top: 0;
+    right: 0;
+    z-index: -1; }
+
+.mce-content-body .d-sm-none::before,
+.mce-content-body .visible-xs::before {
+  content: '\f470'; }
+
+.mce-content-body .d-none.d-sm-block::before,
+.mce-content-body .hidden-xs::before {
+  content: '\f472'; }

@@ -131,6 +131,7 @@ abstract class Mce extends Core\Singleton {
 		if ( $this->editor_css !== false ) {
 			add_filter('mce_css' , array( $this , 'mce_css' ), 99 );
 		}
+
 		if ( $this->toolbar_css !== false ) {
 			add_action( "admin_print_scripts", array( $this, 'enqueue_toolbar_css') );
 		}
@@ -269,7 +270,7 @@ abstract class Mce extends Core\Singleton {
 	 */
 	public function mce_css( $styles ) {
 		if ( apply_filters( 'tiny_bootstrap_enqueue_editor_css', true ) ) {
-			$styles .= ','. $this->get_mce_css_url();			
+			$styles .= ','. $this->get_mce_css_url();
 		}
 		return $styles;
 	}

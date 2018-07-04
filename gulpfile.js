@@ -52,7 +52,11 @@ function concat_js( src, dest ) {
 
 gulp.task('scss', function() {
 	return [
-		do_scss( 'admin/mce/tiny-bootstrap-editor'),
+		do_scss( 'admin/mce/tiny-bootstrap3-editor'),
+		do_scss( 'admin/mce/tiny-bootstrap4-editor'),
+		do_scss( 'admin/mce/tiny-bootstrap-bigsmall-toolbar'),
+		do_scss( 'admin/mce/tiny-bootstrap-classes-editor'),
+		do_scss( 'admin/mce/tiny-bootstrap-visibility-editor'),
 		do_scss( 'bootstrap/3/bootstrap'),
 		do_scss( 'bootstrap/4/bootstrap'),
 	];
@@ -61,7 +65,9 @@ gulp.task('scss', function() {
 
 gulp.task('js-admin', function() {
     return [
-		do_js('admin/mce/tiny-bootstrap-plugin')
+		do_js('admin/mce/tiny-bootstrap-bigsmall-plugin'),
+		do_js('admin/mce/tiny-bootstrap-classes-plugin'),
+		do_js('admin/mce/tiny-bootstrap-visibility-plugin'),
     ];
 });
 

@@ -1,0 +1,53 @@
+
+
+@import '../../variables/variables';
+
+@import '../../mixins/mixins';
+
+// @import '../../../../node_modules/bootstrap/scss/functions';
+// @import '../../../../node_modules/bootstrap/scss/variables';
+// @import '../../../../node_modules/bootstrap/scss/mixins';
+// @import '../../../../node_modules/bootstrap/scss/root';
+// @import '../../../../node_modules/bootstrap/scss/reboot';
+// @import '../../../../node_modules/bootstrap/scss/type';
+// @import '../../../../node_modules/bootstrap/scss/tables';
+// @import '../../../../node_modules/bootstrap/scss/buttons';
+// @import '../../../../node_modules/bootstrap/scss/badge';
+// @import '../../../../node_modules/bootstrap/scss/jumbotron';
+// @import '../../../../node_modules/bootstrap/scss/alert';
+// @import '../../../../node_modules/bootstrap/scss/tooltip';
+// @import '../../../../node_modules/bootstrap/scss/list-group';
+// @import '../../../../node_modules/bootstrap/scss/utilities';
+//
+// .mce-content-body {
+//
+// 	a {
+// 		// reset WP selected link styles
+// 		&[data-mce-selected] {
+// 			/* buttons */
+// 			&.btn {
+// 				margin:0;
+// 				@include button-size($btn-padding-y, $btn-padding-x, $font-size-base, $btn-line-height, $btn-border-radius);
+// 			}
+// 			&.btn-lg {
+// 				margin:0;
+// 				@include button-size($btn-padding-y-lg, $btn-padding-x-lg, $font-size-lg, $btn-line-height-lg, $btn-border-radius-lg);
+// 			}
+// 			&.btn-sm {
+// 				margin:0;
+// 				@include button-size($btn-padding-y-sm, $btn-padding-x-sm, $font-size-sm, $btn-line-height-sm, $btn-border-radius-sm);
+// 			}
+//
+// 			/* badges */
+// 			&.badge {
+// 				padding: $badge-padding-y $badge-padding-x;
+// 				margin:0;
+// 			}
+// 			&.badge-pill {
+// 			  padding-right: $badge-pill-padding-x;
+// 			  padding-left: $badge-pill-padding-x;
+// 			  margin:0;
+// 			}
+// 		}
+// 	}
+// }

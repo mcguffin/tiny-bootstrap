@@ -1,0 +1,39 @@
+
+@import '../../variables/variables';
+
+@import '../../mixins/mixins';
+
+
+.mce-content-body {
+
+	.d-none.d-sm-block,
+	.d-sm-none,
+	.hidden-xs,
+	.visible-xs {
+		border:1px dotted #ccc;
+		position:relative;
+		&::before {
+			font-family:dashicons;
+			color:#ccc;
+			position:absolute;
+			font-size:32px;
+			line-height:1em;
+			top:0;
+			right:0;
+			z-index:-1;
+		}
+	}
+	.d-sm-none,
+	.visible-xs {
+		&::before {
+			content:'\f470';
+		}
+	}
+	.d-none.d-sm-block,
+	.hidden-xs {
+		&::before {
+			content:'\f472';
+		}
+	}
+
+}

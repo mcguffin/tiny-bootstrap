@@ -55,7 +55,9 @@ Core\Core::instance();
 
 if ( is_admin() || defined( 'DOING_AJAX' ) ) {
 
-	Admin\Mce\MceBootstrap::instance();
+	Admin\Mce\MceBootstrapBigSmall::instance();
+	Admin\Mce\MceBootstrapClasses::instance();
+	Admin\Mce\MceBootstrapVisibility::instance();
 
 	// don't WP-Update actual repos!
 	if ( ! file_exists( TINY_BOOTSTRAP_DIRECTORY . '/.git/' ) ) {

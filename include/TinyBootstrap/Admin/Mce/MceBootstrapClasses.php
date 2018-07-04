@@ -9,9 +9,9 @@ if ( ! defined('ABSPATH') ) {
 
 use TinyBootstrap\Core;
 
-class MceBootstrap extends Mce {
+class MceBootstrapClasses extends Mce {
 
-	protected $module_name = 'tiny-bootstrap';
+	protected $module_name = 'tiny-bootstrap-classes';
 
 	protected $editor_buttons = array(
 		'mce_buttons_2' => array(
@@ -27,7 +27,9 @@ class MceBootstrap extends Mce {
 	 *	@inheritdoc
 	 */
 	protected function __construct() {
+
 		add_action( 'admin_init', array( $this, 'setup') );
+
 		$this->plugin_params = array();
 
 		parent::__construct();
