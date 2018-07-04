@@ -7,31 +7,34 @@ var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 
-function do_scss( src ) {
+
+function do_scss( src, dest ) {
 	var dir = src.substring( 0, src.lastIndexOf('/') );
+	dest = dest || './css/' + dir ;
 	return gulp.src( './src/scss/' + src + '.scss' )
 		.pipe( sourcemaps.init() )
-		.pipe( sass( { outputStyle: 'nested' } ).on('error', sass.logError) )
+		.pipe( sass( { outputStyle: 'nested' } ).on('error', sass.logError ) )
 		.pipe( autoprefixer({
 			browsers:['last 2 versions']
 		}) )
-		.pipe( gulp.dest( './css/' + dir ) )
-        .pipe( sass( { outputStyle: 'compressed' } ).on('error', sass.logError) )
+		.pipe( gulp.dest( dest ) )
+        .pipe( sass( { outputStyle: 'compressed' } ).on('error', sass.logError ) )
 		.pipe( rename( { suffix: '.min' } ) )
         .pipe( sourcemaps.write() )
-        .pipe( gulp.dest( './css/' + dir ) );
+        .pipe( gulp.dest( dest ) );
 
 }
 
-function do_js( src ) {
+function do_js( src, dest ) {
 	var dir = src.substring( 0, src.lastIndexOf('/') );
+	dest = dest || './js/' + dir ;
 	return gulp.src( './src/js/' + src + '.js' )
 		.pipe( sourcemaps.init() )
-		.pipe( gulp.dest( './js/' + dir ) )
+		.pipe( gulp.dest( dest ) )
 		.pipe( uglify().on('error', gulputil.log ) )
 		.pipe( rename( { suffix: '.min' } ) )
 		.pipe( sourcemaps.write() )
-		.pipe( gulp.dest( './js/' + dir ) );
+		.pipe( gulp.dest( dest ) );
 }
 
 function concat_js( src, dest ) {
@@ -49,7 +52,9 @@ function concat_js( src, dest ) {
 
 gulp.task('scss', function() {
 	return [
-		do_scss('admin/mce/tiny-bootstrap-editor')
+		do_scss( 'admin/mce/tiny-bootstrap-editor'),
+		do_scss( 'bootstrap/3/bootstrap'),
+		do_scss( 'bootstrap/4/bootstrap'),
 	];
 });
 
@@ -58,7 +63,6 @@ gulp.task('js-admin', function() {
     return [
 		do_js('admin/mce/tiny-bootstrap-plugin')
     ];
-
 });
 
 
