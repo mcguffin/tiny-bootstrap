@@ -157,7 +157,10 @@ abstract class Mce extends Core\Singleton {
 
 		$suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.min';
 
-		$js_settings = array() + $this->mce_settings;
+		$js_settings = array();
+		if ( $this->mce_settings !== false ) {
+			$js_settings += $this->mce_settings;
+		}
 
 		// add editor css
 		if ( $this->editor_css && apply_filters( 'tiny_bootstrap_enqueue_editor_css', true ) ) {
