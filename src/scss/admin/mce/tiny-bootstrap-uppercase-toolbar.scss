@@ -1,0 +1,9 @@
+.mce-i-uppercase::before {
+	content:'TT';
+	font-family:serif;
+	font-size:1.2em;
+	letter-spacing: -0.2em;
+	margin-left: -0.15em;
+	position:relative;
+	top:-1px;
+}

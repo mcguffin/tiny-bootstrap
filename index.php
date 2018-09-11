@@ -57,6 +57,7 @@ if ( is_admin() || defined( 'DOING_AJAX' ) ) {
 
 	Admin\Mce\MceBootstrapBigSmall::instance();
 	Admin\Mce\MceBootstrapClasses::instance();
+	Admin\Mce\MceBootstrapUppercase::instance();
 	Admin\Mce\MceBootstrapVisibility::instance();
 
 	// don't WP-Update actual repos!

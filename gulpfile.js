@@ -56,6 +56,7 @@ gulp.task('scss', function() {
 		do_scss( 'admin/mce/tiny-bootstrap4-editor'),
 		do_scss( 'admin/mce/tiny-bootstrap-bigsmall-toolbar'),
 		do_scss( 'admin/mce/tiny-bootstrap-classes-editor'),
+		do_scss( 'admin/mce/tiny-bootstrap-uppercase-toolbar'),
 		do_scss( 'admin/mce/tiny-bootstrap-visibility-editor'),
 		do_scss( 'bootstrap/3/bootstrap'),
 		do_scss( 'bootstrap/4/bootstrap'),
@@ -67,6 +68,7 @@ gulp.task('js-admin', function() {
     return [
 		do_js('admin/mce/tiny-bootstrap-bigsmall-plugin'),
 		do_js('admin/mce/tiny-bootstrap-classes-plugin'),
+		do_js('admin/mce/tiny-bootstrap-uppercase-plugin'),
 		do_js('admin/mce/tiny-bootstrap-visibility-plugin'),
     ];
 });
