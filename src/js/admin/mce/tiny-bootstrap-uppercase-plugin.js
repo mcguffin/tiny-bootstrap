@@ -10,14 +10,16 @@ var uppercasePluginCallback;
 		}
 
 		editor.addCommand( 'cmd_uppercase', function() {
-			console.log(isUppercase());
-			if ( isUppercase() ) {
-				editor.formatter.remove( 'uppercase' );
-				// remove empty span if necessary!
+			console.log($(editor.selection.getNode()).is('[class]'));
+			var $node = $(editor.selection.getNode());
+			if ( $node.is('[class]') && ! $node.is('span[class="text-uppercase"]') ) {
+				$node.toggleClass('text-uppercase');
 			} else {
-				editor.formatter.apply( 'uppercase' );
+				editor.formatter.toggle( 'uppercase' )
 			}
+
 		});
+
 
 		editor.addButton('uppercase', {
 			icon: 'uppercase',
@@ -26,7 +28,7 @@ var uppercasePluginCallback;
 			onPostRender: function() {
 				uppercaseBtn = this;
 				editor.on( 'nodechange', function( event ) {
-					uppercaseBtn.active( isUppercase() );
+					uppercaseBtn.active( editor.formatter.match( 'uppercase' ) );
 				});
 			}
 		});
@@ -34,7 +36,7 @@ var uppercasePluginCallback;
 
 		editor.on( 'init', function(){
 	//		editor.formatter.register( 'span', { inline: 'span' });
-			editor.formatter.register( 'uppercase', { attributes: { class: 'text-uppercase' }, selector:'a,span,big,small,strong,em,h1,h2,h3,h4,h5,h6', inline:'span' });
+			editor.formatter.register( 'uppercase', { attributes: { class: 'text-uppercase' }, selector:'a,span,big,small,strong,em,h1,h2,h3,h4,h5,h6,p', inline:'span' });
 		});
 	};
 
