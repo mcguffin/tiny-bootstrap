@@ -10,6 +10,7 @@ var uppercasePluginCallback;
 		}
 
 		editor.addCommand( 'cmd_uppercase', function() {
+			console.log(isUppercase());
 			if ( isUppercase() ) {
 				editor.formatter.remove( 'uppercase' );
 				// remove empty span if necessary!
@@ -33,7 +34,7 @@ var uppercasePluginCallback;
 
 		editor.on( 'init', function(){
 	//		editor.formatter.register( 'span', { inline: 'span' });
-			editor.formatter.register( 'uppercase', { attributes: { class: 'text-uppercase' }, selector:'a,span,big,small,strong,em' });
+			editor.formatter.register( 'uppercase', { attributes: { class: 'text-uppercase' }, selector:'a,span,big,small,strong,em,h1,h2,h3,h4,h5,h6', inline:'span' });
 		});
 	};
 
