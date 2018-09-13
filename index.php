@@ -9,6 +9,7 @@ Version: 0.1.0
 Author URI: https://github.com/mcguffin
 License: GPL3
 Github Repository: mcguffin/tiny-bootstrap
+GitHub Plugin URI: mcguffin/tiny-bootstrap
 Text Domain: tiny-bootstrap
 Domain Path: /languages/
 */
@@ -62,7 +63,18 @@ if ( is_admin() || defined( 'DOING_AJAX' ) ) {
 
 	// don't WP-Update actual repos!
 	if ( ! file_exists( TINY_BOOTSTRAP_DIRECTORY . '/.git/' ) ) {
-		AutoUpdate\AutoUpdateGithub::instance();
+
+		// Check if https://github.com/afragen/github-updater is active
+		$active_plugins = get_option('active_plugins');
+
+		if ( $sitewide_plugins = get_site_option('active_sitewide_plugins') ) {
+			$active_plugins = array_merge( $active_plugins, array_keys( $sitewide_plugins ) );
+		}
+
+		if ( ! in_array( 'github-updater/github-updater.php', $active_plugins ) ) {
+
+			AutoUpdate\AutoUpdateGithub::instance()->init( __FILE__ );
+		}
 	}
 
 

@@ -11,77 +11,77 @@ use TinyBootstrap\Core;
 
 abstract class AutoUpdate extends Core\Singleton {
 
-
 	/**
 	 *	@var array Current release info
 	 */
 	protected $release_info = null;
 
 	/**
-	 *	@inheritdoc
+	 *	@var string absolute path to plugin file
 	 */
-	protected function __construct() {
+	protected $file = null;
+
+	/**
+	 *	@var string absolute path to plugin directory
+	 */
+	protected $directory = null;
+
+	/**
+	 *	@var string absolute path to plugin directory
+	 */
+	protected $slug = null;
+
+	/**
+	 *	@param string $plugin_file absolute path to plugin file
+	 */
+	public function init( $plugin_file ) {
+
+		$this->file = $plugin_file;
+		$this->directory = plugin_dir_path( $plugin_file );
+		$this->slug = basename($this->directory);
 
 		add_filter( 'pre_set_site_transient_update_plugins', array( $this, 'pre_set_transient' ), 10, 3 );
 
+//		add_filter( 'pre_site_transient_update_plugins', array( $this, 'check_site_transient' ), 10, 2 );
+		add_filter( 'site_transient_update_plugins', array( $this, 'check_site_transient' ), 10, 2 );
+
 		add_filter( 'upgrader_source_selection', array( $this, 'source_selection' ), 10, 4 );
-
-		add_action( 'upgrader_process_complete', array( $this, 'upgrade_completed' ), 10, 2 );
-
 		add_filter( 'plugins_api', array( $this, 'plugins_api' ), 10, 3 );
-
 	}
 
 	/**
-	 *	@action upgrader_process_complete
+	 *	Prevent WP.org updates of plugins with the same slug.
+	 *
+	 *	@filter site_transient_update_plugins
 	 */
-	public function upgrade_completed( $wp_upgrader, $hook_extra ) {
+	public function check_site_transient( $value, $transient ) {
+		$plugin = plugin_basename( $this->file );
 
-		$plugin = plugin_basename( TINY_BOOTSTRAP_FILE );
-
-		if ( $hook_extra['action'] === 'update' && $hook_extra['type'] === 'plugin' && in_array( $plugin, $hook_extra['plugins'] ) ) {
-
-			$plugin_info = get_plugin_data( TINY_BOOTSTRAP_FILE );
-
-			$old_version = get_option( 'tiny_bootstrap_version' );
-			$new_version = $plugin_info['Version'];
-
-			do_action( 'tiny_bootstrap_upgraded', $new_version, $old_version );
-
-		//	update_option( 'tiny_bootstrap_version', $plugin_info['Version'] );
-
+		if ( ! is_object( $value ) || ! isset( $value->response ) || ! isset( $value->response[ plugin_basename( $this->file ) ] ) ) {
+			return $value;
 		}
-	}
 
+		$plugin_info	= get_plugin_data( $this->file );
+
+		if ( $value->response[ $plugin ]->slug === $this->slug && $value->response[ $plugin ]->url !== $plugin_info['PluginURI'] ) {
+			unset( $value->response[$plugin] );
+		}
+		return $value;
+	}
 
 	/**
 	 *	@filter plugin_api
 	 */
 	public function plugins_api( $res, $action, $args ) {
-		$slug = basename(TINY_BOOTSTRAP_DIRECTORY);
-		if ( isset($_REQUEST['plugin']) && $_REQUEST['plugin'] === $slug ) {
-			/*
 
-			'Name'        => 'Plugin Name',
-			'PluginURI'   => 'Plugin URI',
-			'Version'     => 'Version',
-			'Description' => 'Description',
-			'Author'      => 'Author',
-			'AuthorURI'   => 'Author URI',
-			'TextDomain'  => 'Text Domain',
-			'DomainPath'  => 'Domain Path',
-			'Network'     => 'Network',
+		if ( isset($_REQUEST['plugin']) && $_REQUEST['plugin'] === $this->slug ) {
 
-
-			*/
-
-
-			$plugin_info	= get_plugin_data( TINY_BOOTSTRAP_FILE );
+			$plugin_info	= get_plugin_data( $this->file );
 			$release_info	= $this->get_release_info();
 
 			$plugin_api = array(
 				'name'						=> $plugin_info['Name'],
-				'slug'						=> $slug,
+				'slug'						=> $this->slug,
 //				'version'					=> $release_info, // release
 				'author'					=> $plugin_info['Author'],
 				'author_profile'			=> $plugin_info['AuthorURI'],
@@ -106,7 +106,7 @@ abstract class AutoUpdate extends Core\Singleton {
 //				'donate_link'				=> '',
 				'banners'					=> $this->get_plugin_banners(),
 				'external'					=> true,
-			) + $release_info;
+			) + (array) $release_info;
 
 			return (object) $plugin_api;
 		}
@@ -117,16 +117,18 @@ abstract class AutoUpdate extends Core\Singleton {
 	 *	@filter upgrader_source_selection
 	 */
 	public function source_selection( $source, $remote_source, $wp_upgrader, $hook_extra ) {
-		if ( isset( $hook_extra['plugin'] ) && $hook_extra['plugin'] === plugin_basename( TINY_BOOTSTRAP_FILE ) ) {
+		if ( isset( $hook_extra['plugin'] ) && $hook_extra['plugin'] === plugin_basename( $this->file ) ) {
 			// $source: filepath
 			// $remote_source download dir
 			$source_dirname = pathinfo( $source, PATHINFO_FILENAME);
 			$plugin_dirname = pathinfo( $hook_extra['plugin'], PATHINFO_DIRNAME );
-
 			if ( $source_dirname !== $plugin_dirname ) {
-				$new_source = $remote_source . '/' . $plugin_dirname;
-				rename( $source, $new_source );
-				$source = $new_source;
+
+				$new_source = pathinfo( $remote_source, PATHINFO_DIRNAME )  . '/' . $plugin_dirname;
+
+				if ( rename( $source, $new_source ) ) {
+					$source = $new_source;
+				}
 			}
 
 		}
@@ -161,23 +163,23 @@ abstract class AutoUpdate extends Core\Singleton {
 
 		// get own version
 		if ( $release_info = $this->get_release_info() ) {
-			$plugin 		= plugin_basename( TINY_BOOTSTRAP_FILE );
-			$slug			= basename(TINY_BOOTSTRAP_DIRECTORY);
-			$plugin_info	= get_plugin_data( TINY_BOOTSTRAP_FILE );
+			$plugin 		= plugin_basename( $this->file );
+			$this->slug			= basename($this->directory);
+			$plugin_info	= get_plugin_data( $this->file );
 
-			if ( version_compare( $release_info['version'], $plugin_info['Version'] , '>' ) ) {
+			if ( version_compare( $release_info->version, $plugin_info['Version'] , '>' ) ) {
 
 				$transient->response[ $plugin ] = (object) array(
-					'id'			=> $release_info['id'],
-					'slug'			=> $slug,
+					'id'			=> $release_info->id,
+					'slug'			=> $this->slug,
 					'plugin'		=> $plugin,
-					'new_version'	=> $release_info['version'],
+					'new_version'	=> $release_info->version,
 					'url'			=> $plugin_info['PluginURI'],
-					'package'		=> $release_info['download_link'],
+					'package'		=> $release_info->download_link,
 					'icons'			=> array(),
 					'banners'		=> array(),
 					'banners_rtl'	=> array(),
-					'tested'		=> $release_info['tested'],
+					'tested'		=> $release_info->tested,
 					'compatibility'	=> (object) array(),
 				);
 				if ( isset( $transient->no_update ) && isset( $transient->no_update[$plugin] ) ) {
@@ -204,7 +206,7 @@ abstract class AutoUpdate extends Core\Singleton {
 			$this->release_info = $this->get_remote_release_info();
 		}
 
-		return $this->release_info;
+		return (object) $this->release_info;
 	}
 
 	/**
@@ -213,11 +215,7 @@ abstract class AutoUpdate extends Core\Singleton {
 	 *	@return array(
 	 *		'id'			=> '...'
 	 *		'version'		=> '...'
-	 *		'download_link'	=> 'https://...'
-	 *		'tested'		=> <WP version>
-	 *		'requires'		=> <Min WP version>
-	 *		'requires_php'	=> <Min PHP version>
-	 *		'last_updated'	=> <date>
+	 *		'download_url'	=> 'https://...'
 	 *	)
 	 */
 	abstract function get_remote_release_info();
