@@ -5,7 +5,7 @@ Plugin Name: Tiny Bootstrap
 Plugin URI: http://wordpress.org/
 Description: Enter description here.
 Author: Jörn Lund
-Version: 0.1.1
+Version: 0.1.2
 Author URI: https://github.com/mcguffin
 License: GPL3
 Github Repository: mcguffin/tiny-bootstrap
