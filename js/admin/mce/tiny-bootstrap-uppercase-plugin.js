@@ -5,16 +5,13 @@ var uppercasePluginCallback;
 	uppercasePluginCallback = function( editor ) {
 		var uppercaseBtn;
 
-		function isUppercase() {
-			return !! editor.formatter.matchNode( editor.selection.getNode(), 'uppercase' );
-		}
-
 		editor.addCommand( 'cmd_uppercase', function() {
-			console.log($(editor.selection.getNode()).is('[class]'));
+
 			var $node = $(editor.selection.getNode());
-			if ( $node.is('[class]') && ! $node.is('span[class="text-uppercase"]') ) {
+
+			if ( $node.is('[class]') && ! $node.is('span[class="text-uppercase"]') ) { // don't ointerfere with other classes
 				$node.toggleClass('text-uppercase');
-			} else {
+			} else { //
 				editor.formatter.toggle( 'uppercase' )
 			}
 
