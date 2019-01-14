@@ -31,7 +31,7 @@ class Admin extends Core\Singleton {
 		$bs_version = apply_filters('tiny_bootstrap_version', 4 );
 
 		if ( intval( $bs_version ) !== 4 ) {
-			add_filter( 'tiny_bootstrap_visibiity_classes', array( $this, 'bootstrap_3_classes' ), 5 );
+			add_filter( 'tiny_bootstrap_classes', array( $this, 'bootstrap_3_classes' ), 5 );
 			add_filter( 'tiny_bootstrap_visibiity_classes', array( $this, 'bootstrap_3_visibility_classes' ), 5 );
 		}
 	}
