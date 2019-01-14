@@ -56,6 +56,7 @@ Core\Core::instance();
 
 if ( is_admin() || defined( 'DOING_AJAX' ) ) {
 
+	Admin\Admin::instance();
 	Admin\Mce\MceBootstrapBigSmall::instance();
 	Admin\Mce\MceBootstrapClasses::instance();
 	Admin\Mce\MceBootstrapUppercase::instance();

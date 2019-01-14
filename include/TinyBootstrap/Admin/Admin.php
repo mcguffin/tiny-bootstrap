@@ -15,7 +15,7 @@ class Admin extends Core\Singleton {
 	 */
 	protected function __construct() {
 
-		add_action( 'admin_init' , array( $this , 'admin_init' ) );
+		add_action( 'admin_init' , array( $this , 'admin_init' ), 9 );
 
 		parent::__construct();
 	}
@@ -32,7 +32,7 @@ class Admin extends Core\Singleton {
 
 		if ( intval( $bs_version ) !== 4 ) {
 			add_filter( 'tiny_bootstrap_classes', array( $this, 'bootstrap_3_classes' ), 5 );
-			add_filter( 'tiny_bootstrap_visibiity_classes', array( $this, 'bootstrap_3_visibility_classes' ), 5 );
+			add_filter( 'tiny_bootstrap_visibility_classes', array( $this, 'bootstrap_3_visibility_classes' ), 5 );
 		}
 	}
 
