@@ -42,7 +42,7 @@ class Admin extends Core\Singleton {
 	 *	@filter bootstrap_3_classes
 	 *	@return array
 	 */
-	private function bootstrap_3_classes() {
+	public function bootstrap_3_classes() {
 		return array(
 			'a,button'	=> array(
 				'title'		=> __( 'Link style', 'mcguffin' ),
@@ -117,7 +117,7 @@ class Admin extends Core\Singleton {
 	 *	@filter bootstrap_3_visibility_classes
 	 *	@return array
 	 */
-	private function bootstrap_3_visibility_classes() {
+	public function bootstrap_3_visibility_classes() {
 		return array(
 			array(
 				'value'	=> '',
