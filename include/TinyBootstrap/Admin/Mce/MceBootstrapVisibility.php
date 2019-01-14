@@ -61,7 +61,7 @@ class MceBootstrapVisibility extends Mce {
 				'devices'				=> __( 'Devices', 'tiny-bootstrap' ),
 				'visibility_on_devices'	=> __( 'Visibility on devices', 'tiny-bootstrap' ),
 			),
-			'classes'	=> apply_filters( 'tiny_bootstrap_visibiity_classes', $visibility_classes ),
+			'classes'	=> apply_filters( 'tiny_bootstrap_visibility_classes', $visibility_classes ),
 		);
 
 	}
