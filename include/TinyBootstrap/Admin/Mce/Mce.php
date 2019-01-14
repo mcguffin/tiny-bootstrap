@@ -303,7 +303,10 @@ abstract class Mce extends Core\Singleton {
 		if ( $to_load['tinymce'] ) {
 			$varname = sprintf( 'mce_%s', $this->prefix );
 			$params = json_encode($this->plugin_params );
-			printf( '<script type="text/javascript"> var %s = %s;</script>', $varname, $params );
+			wp_add_inline_script('editor',
+				sprintf( 'var %s = %s;', $varname, $params ),
+				'before'
+			);
     	}
 	}
 
