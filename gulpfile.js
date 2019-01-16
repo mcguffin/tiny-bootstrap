@@ -49,43 +49,48 @@ function concat_js( src, dest ) {
 
 }
 
+gulp.task('scss:bs-editor:3', function(){ return do_scss( 'admin/mce/tiny-bootstrap3-editor') });
+gulp.task('scss:bs-editor:4', function(){ return do_scss( 'admin/mce/tiny-bootstrap3-editor') });
+gulp.task('scss:bugsmall',    function(){ return do_scss( 'admin/mce/tiny-bootstrap-bigsmall-toolbar') });
+gulp.task('scss:classes',     function(){ return do_scss( 'admin/mce/tiny-bootstrap-classes-editor') });
+gulp.task('scss:uppercase',   function(){ return do_scss( 'admin/mce/tiny-bootstrap-uppercase-toolbar') });
+gulp.task('scss:visibility',  function(){ return do_scss( 'admin/mce/tiny-bootstrap-visibility-editor') });
+gulp.task('scss:bs:3',        function(){ return do_scss( 'bootstrap/3/bootstrap') });
+gulp.task('scss:bs:4',        function(){ return do_scss( 'bootstrap/4/bootstrap') });
 
-gulp.task('scss', function() {
-	return [
-		do_scss( 'admin/mce/tiny-bootstrap3-editor'),
-		do_scss( 'admin/mce/tiny-bootstrap4-editor'),
-		do_scss( 'admin/mce/tiny-bootstrap-bigsmall-toolbar'),
-		do_scss( 'admin/mce/tiny-bootstrap-classes-editor'),
-		do_scss( 'admin/mce/tiny-bootstrap-uppercase-toolbar'),
-		do_scss( 'admin/mce/tiny-bootstrap-visibility-editor'),
-		do_scss( 'bootstrap/3/bootstrap'),
-		do_scss( 'bootstrap/4/bootstrap'),
-	];
-});
+gulp.task('scss', gulp.parallel(
+	'scss:bs-editor:3',
+	'scss:bs-editor:4',
+	'scss:bugsmall',
+	'scss:classes',
+	'scss:uppercase',
+	'scss:visibility',
+	'scss:bs:3',
+	'scss:bs:4'
+));
+
+gulp.task('js:admin:bigsmall', function(){ return do_js('admin/mce/tiny-bootstrap-bigsmall-plugin') });
+gulp.task('js:admin:classes', function(){ return do_js('admin/mce/tiny-bootstrap-classes-plugin') });
+gulp.task('js:admin:uppercase', function(){ return do_js('admin/mce/tiny-bootstrap-uppercase-plugin') });
+gulp.task('js:admin:visibility', function(){ return do_js('admin/mce/tiny-bootstrap-visibility-plugin') });
+
+gulp.task('js:admin', gulp.parallel(
+	'js:admin:bigsmall',
+	'js:admin:classes',
+	'js:admin:uppercase',
+	'js:admin:visibility',
+));
 
 
-gulp.task('js-admin', function() {
-    return [
-		do_js('admin/mce/tiny-bootstrap-bigsmall-plugin'),
-		do_js('admin/mce/tiny-bootstrap-classes-plugin'),
-		do_js('admin/mce/tiny-bootstrap-uppercase-plugin'),
-		do_js('admin/mce/tiny-bootstrap-visibility-plugin'),
-    ];
-});
+gulp.task( 'js', gulp.parallel('js:admin') );
 
 
-gulp.task( 'js', function(){
-	return concat_js( [
-	], 'frontend.js');
-} );
-
-
-gulp.task('build', ['scss','js','js-admin'] );
+gulp.task('build', gulp.parallel('scss','js') );
 
 
 gulp.task('watch', function() {
 	// place code for your default task here
-	gulp.watch('./src/scss/**/*.scss',[ 'scss' ]);
-	gulp.watch('./src/js/**/*.js',[ 'js-admin' ]);
+	gulp.watch('./src/scss/**/*.scss',gulp.parallel( 'scss' ));
+	gulp.watch('./src/js/**/*.js',gulp.parallel( 'js' ) );
 });
-gulp.task('default', ['build','watch']);
+gulp.task('default', gulp.series('build','watch'));
