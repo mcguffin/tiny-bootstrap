@@ -5,12 +5,7 @@
       "css": true
     },
     "git": {},
-    "gulp": {},
-    "shortcode": {
-      "foo": {
-        "mce": true
-      }
-    }
+    "gulp": {}
   },
   "plugin_author": "J\u00f6rn Lund",
   "plugin_author_uri": "",

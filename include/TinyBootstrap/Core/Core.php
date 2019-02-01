@@ -14,11 +14,11 @@ class Core extends Plugin {
 	 */
 	protected function __construct() {
 
-		add_action( 'plugins_loaded' , array( $this , 'load_textdomain' ) );
 		add_action( 'init' , array( $this , 'init' ) );
 		add_action( 'wp_enqueue_scripts' , array( $this , 'wp_enqueue_style' ) );
 
-		parent::__construct();
+		$args = func_get_args();
+		parent::__construct( ...$args );
 	}
 
 	/**
@@ -33,21 +33,16 @@ class Core extends Plugin {
 
 
 	/**
-	 *	Load text domain
-	 *
-	 *  @action plugins_loaded
-	 */
-	public function load_textdomain() {
-		$path = pathinfo( dirname( TINY_BOOTSTRAP_FILE ), PATHINFO_FILENAME );
-		load_plugin_textdomain( 'tiny-bootstrap' , false, $path . '/languages' );
-	}
-
-	/**
 	 *	Init hook.
 	 *
 	 *  @action init
 	 */
 	public function init() {
+		remove_action( 'wp_enqueue_scripts', 'wp_common_block_scripts_and_styles' );
+		remove_action( 'admin_enqueue_scripts', 'wp_common_block_scripts_and_styles' );
+		if ( ! is_admin() ) {
+			// don't include wp block styles in frontend
+		}
 	}
 
 	/**
