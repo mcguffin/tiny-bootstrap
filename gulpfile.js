@@ -7,18 +7,22 @@ var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 
+function onError(err) {
+	console.log(err);
+	this.emit('end');
+}
 
 function do_scss( src, dest ) {
 	var dir = src.substring( 0, src.lastIndexOf('/') );
 	dest = dest || './css/' + dir ;
 	return gulp.src( './src/scss/' + src + '.scss' )
 		.pipe( sourcemaps.init() )
-		.pipe( sass( { outputStyle: 'nested' } ).on('error', sass.logError ) )
+		.pipe( sass( { outputStyle: 'nested' } ).on('error', onError ) )
 		.pipe( autoprefixer({
 			browsers:['last 2 versions']
 		}) )
 		.pipe( gulp.dest( dest ) )
-        .pipe( sass( { outputStyle: 'compressed' } ).on('error', sass.logError ) )
+        .pipe( sass( { outputStyle: 'compressed' } ).on('error', onError ) )
 		.pipe( rename( { suffix: '.min' } ) )
         .pipe( sourcemaps.write() )
         .pipe( gulp.dest( dest ) );
@@ -31,7 +35,7 @@ function do_js( src, dest ) {
 	return gulp.src( './src/js/' + src + '.js' )
 		.pipe( sourcemaps.init() )
 		.pipe( gulp.dest( dest ) )
-		.pipe( uglify().on('error', gulputil.log ) )
+		.pipe( uglify().on('error', onError ) )
 		.pipe( rename( { suffix: '.min' } ) )
 		.pipe( sourcemaps.write() )
 		.pipe( gulp.dest( dest ) );
@@ -42,7 +46,7 @@ function concat_js( src, dest ) {
 		.pipe( sourcemaps.init() )
 		.pipe( concat( dest ) )
 		.pipe( gulp.dest( './js/' ) )
-		.pipe( uglify().on('error', gulputil.log ) )
+		.pipe( uglify().on('error', onError ) )
 		.pipe( rename( { suffix: '.min' } ) )
 		.pipe( sourcemaps.write() )
 		.pipe( gulp.dest( './js/' ) );
