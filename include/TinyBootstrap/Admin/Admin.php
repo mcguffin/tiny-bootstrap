@@ -16,19 +16,10 @@ class Admin extends Core\Singleton {
 	protected function __construct() {
 
 		add_action( 'admin_init' , array( $this , 'admin_init' ), 9 );
-		add_action('enqueue_block_editor_assets',array( $this, 'enqueue_block_editor_assets' ) );
 
 		parent::__construct();
 	}
 
-	/**
-	 *	@action enqueue_block_editor_assets
-	 */
-	public function enqueue_block_editor_assets() {
-		$core = Core\Core::instance();
-		wp_enqueue_script('mcguffin-blocks-admin', $core->get_asset_url( 'js/admin/blocks/blocks.js' ), [ 'wp-edit-post' ], $core->get_version(), true );
-
-	}
 
 	/**
 	 *	Init hook.

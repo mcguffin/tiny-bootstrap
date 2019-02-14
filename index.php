@@ -51,6 +51,7 @@ define( 'TINY_BOOTSTRAP_PLUGIN', pathinfo( TINY_BOOTSTRAP_DIRECTORY, PATHINFO_FI
 require_once TINY_BOOTSTRAP_DIRECTORY . 'include/autoload.php';
 
 Core\Core::instance( __FILE__ );
+Core\Blocks::instance();
 
 
 

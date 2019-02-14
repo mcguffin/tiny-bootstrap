@@ -1,0 +1,36 @@
+// columns
+.wp-block-columns {
+	@extend .row;
+}
+.wp-block-column {
+	@extend .col;
+}
+
+
+
+// table
+.wp-block-table {
+	@extend .table;
+}
+
+// iamges
+.wp-block-image {
+	@extend .figure;
+}
+.wp-block-image {
+	& > img {
+		@extend .figure-img;
+	}
+	& > figcaption {
+		@extend .figure-caption;
+	}
+}
+
+@each $name,$color in $theme-colors {
+	.has-#{$name}-color {
+		@extend .text-#{$name};
+	}
+	.has-#{$name}-background-color {
+		@extend .bg-#{$name};
+	}
+}

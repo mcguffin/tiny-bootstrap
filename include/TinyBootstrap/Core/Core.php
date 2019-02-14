@@ -38,23 +38,40 @@ class Core extends Plugin {
 	 *  @action init
 	 */
 	public function init() {
-		remove_action( 'wp_enqueue_scripts', 'wp_common_block_scripts_and_styles' );
-		remove_action( 'admin_enqueue_scripts', 'wp_common_block_scripts_and_styles' );
-		if ( ! is_admin() ) {
-			// don't include wp block styles in frontend
-		}
 	}
+
 
 	/**
 	 *	Get asset url for this plugin
 	 *
 	 *	@param	string	$asset	URL part relative to plugin class
-	 *	@return wp_enqueue_editor
+	 *	@return string URL
 	 */
 	public function get_asset_url( $asset ) {
-		return plugins_url( $asset, TINY_BOOTSTRAP_FILE );
+		$pi = pathinfo($asset);
+		if ( defined('SCRIPT_DEBUG') && SCRIPT_DEBUG && in_array( $pi['extension'], ['css','js']) ) {
+			// add .dev suffix (files with sourcemaps)
+			$asset = sprintf('%s/%s.dev.%s', $pi['dirname'], $pi['filename'], $pi['extension'] );
+		}
+		return plugins_url( $asset, $this->get_plugin_file() );
 	}
 
+
+	/**
+	 *	Get asset url for this plugin
+	 *
+	 *	@param	string	$asset	URL part relative to plugin class
+	 *	@return string URL
+	 */
+	public function get_asset_path( $asset ) {
+		$pi = pathinfo($asset);
+		if ( defined('SCRIPT_DEBUG') && SCRIPT_DEBUG && in_array( $pi['extension'], ['css','js']) ) {
+			// add .dev suffix (files with sourcemaps)
+			$asset = sprintf('%s/%s.dev.%s', $pi['dirname'], $pi['filename'], $pi['extension'] );
+		}
+		return $this->get_plugin_dir() . '/' . preg_replace( '/^(\/+)/', '', $asset );
+		return plugins_url( $asset, $this->get_plugin_file() );
+	}
 
 
 }

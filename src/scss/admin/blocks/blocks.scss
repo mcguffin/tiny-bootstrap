@@ -1,0 +1,26 @@
+
+@import '../../variables/variables';
+
+@import '../../mixins/mixins';
+
+.bs-visibility-indicator {
+	position: absolute;
+	bottom:100%;
+	right:0;
+	white-space:nowrap;
+	color:$wp-gray-dark;
+}
+
+
+[data-type="tiny-bootstrap/container"] {
+	border:1px solid $wp-gray;
+	&[data-align="full"] {
+		.editor-block-list__layout {
+			margin-left:46px;
+			margin-right:46px;
+		}
+		.wp-block {
+			max-width:initial;
+		}
+	}
+}
