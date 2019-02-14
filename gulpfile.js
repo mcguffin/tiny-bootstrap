@@ -93,8 +93,8 @@ gulp.task('js:admin:blocks', function(){ return concat_js([
 	'admin/blocks/overrides/*',
 	'admin/blocks/blocks',
 	'admin/blocks/components/*',
-	'admin/blocks/blocks/*',
 	'admin/blocks/features/*',
+	'admin/blocks/blocks/*',
 ],'admin/blocks/blocks.js') });
 //*/
 gulp.task('js:admin', gulp.parallel(

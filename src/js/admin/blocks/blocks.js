@@ -13,7 +13,7 @@ var bs = (function( _ ){
 					editWrap:false,
 					blocks:[],
 				}, feature );
-	//			console.log('reg',feature)
+
 				if ( ! feature.name ) {
 					return false;
 				}
@@ -30,8 +30,6 @@ var bs = (function( _ ){
 				var ret = [],
 					blockTypeWildcard = blockType.replace(/\/([^\/]+)$/,'/*'),
 					features = _.get( this.featureMap, [ blockType ] ) || _.get( this.featureMap, [ blockTypeWildcard ] );
-
-	//			console.log('get',blockType,features)
 
 				_.forEach( features, function( feature, featureName ) {
 

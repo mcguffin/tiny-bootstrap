@@ -2,9 +2,9 @@
 	var el = wp.element.createElement;
 
 	/*
-	section > bgColor
-		container align > full
-			*
+	ToDo:
+		- select tag: div|section|article|aside
+		-
 	*/
 
 	wp.blocks.registerBlockType('tiny-bootstrap/container', {
@@ -32,7 +32,6 @@
 					bgColorClass = wp.editor.getColorClassName( 'background-color', settings.attributes.backgroundColor ),
 					textColorClass = wp.editor.getColorClassName( 'text-color', settings.attributes.textColor ),
 					innerBlocks = el( wp.editor.InnerBlocks, {
-						// template: [[ 'core/paragraph', { fontSize: 'large', placeholder: wp.i18n.__( 'Content…', 'content placeholder' ) } ]],
 						templateLock: false,
 					} ),
 					colorControls = el(
@@ -67,28 +66,21 @@
 						}
 					};
 
-				if ( ! bgColorClass ) {
-					return el (
-						'div',
-						innerProps,
-						// children?
-						innerBlocks,
-						colorControls
-					);
-				} else {
-					// add wrapper if bg color
-					return el(
-						'div',
-						{
-							className: bgColorClass + ' some-garbage',
-							style: {
-								backgroundColor: _.get( settings, 'backgroundColor.color', null ),
-							}
-						},
-						el( 'div', innerProps, innerBlocks ),
-						colorControls
-					)
-				}
+				return el (
+					'div',
+					innerProps,
+					// children?
+					!! bgColorClass ? el( 'div',
+					{
+						className: 'tiny-bootstrap-bg ' + bgColorClass,
+						style: {
+							backgroundColor: _.get( settings, 'backgroundColor.color', null ),
+						}
+					} ) : null,
+					innerBlocks,
+					colorControls
+				);
+
 			}
 		),
 		save:function(settings) {
@@ -111,6 +103,17 @@
 				ret = el( 'div', { className: bgColorClass }, ret );
 			}
 			return ret;
+		},
+		getEditWrapperProps: function getEditWrapperProps(attributes) {
+			var attr = {};
+
+		    if ('wide' === attributes.width || 'full' === attributes.width) {
+				attr['data-align'] = attributes.width;
+		    }
+			if ( attributes.backgroundColor ) {
+				attr['data-has-bg-color'] = 'true';
+			}
+			return attr;
 		}
 	});
 

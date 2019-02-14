@@ -1,0 +1,71 @@
+&[data-type="tiny-bootstrap/container"] {
+	//max-width:initial;
+	//border:1px solid $wp-gray;
+	max-width:none;
+	& {
+		& >.editor-block-list__block-edit {
+			& >.editor-block-contextual-toolbar {
+				height:0;
+				& >.editor-block-toolbar {
+					max-width:610px;
+					width:100%;
+					margin-left:auto;
+					margin-right: auto;
+					position: relative;
+				}
+			}
+		}
+	}
+	.container,
+	.container-fluid {
+		& > .tiny-bootstrap-bg {
+			position: absolute;
+			top: -14px;
+			bottom: -14px;
+		}
+		& > .editor-inner-blocks {
+			border:1px solid transparent;
+		}
+	}
+	.container {
+		& > .tiny-bootstrap-bg {
+			left: -14px;
+			right: -14px;
+		}
+	}
+	.container-fluid {
+		& > .tiny-bootstrap-bg {
+			left: 0;
+			right: 0;
+		}
+		& > .editor-inner-blocks {
+			& > .editor-block-list__layout {
+				margin-left:0;
+				margin-right:0;
+				& > .wp-block {
+					max-width:none;
+					margin-left:45px;
+					margin-right:45px;
+					&[data-type="core/columns"] {
+						.editor-inner-blocks {
+							padding-left:0;
+							padding-right:0;
+						}
+					}
+				}
+			}
+		}
+	}
+	&[data-align="full"] {
+		& > .editor-block-mover {
+			top:-38px;
+		}
+		.editor-block-list__layout {
+		}
+		.wp-block {
+		}
+	}
+	& + .wp-block {
+		margin-top:30px;
+	}
+}
