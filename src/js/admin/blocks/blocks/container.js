@@ -10,7 +10,19 @@
 	wp.blocks.registerBlockType('tiny-bootstrap/container', {
 		title: wp.i18n.__('Container','tiny-bootstrap'),
 		name:'tiny-bootstrap/container',
-		icon:'admin-generic',
+		icon: el(
+			'svg',
+			{
+				viewBox: "0 0 24 24",
+				xmlns: "http://www.w3.org/2000/svg"
+			},
+			el(
+				'path',
+				{
+					d:'M21,4H3L2,5v14l1,1h18l1-1V5L21,4z M11,18H6v-7.3h5V18z M18,18h-5v-7.3h5V18z M18,9H6V6h12V9z'
+				}
+			)
+		),
 		category:'layout',
 		attributes:{
 			backgroundColor: {
