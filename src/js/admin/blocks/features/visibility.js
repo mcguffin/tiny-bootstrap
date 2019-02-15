@@ -8,8 +8,7 @@
 			'core/button',
 			'core/categories',
 			'core/code',
-			'core/columns',
-			'core/column',
+			'core/columns',	// flex!
 			'core/cover',
 			'core-embed/*',
 			'core/embed',
@@ -46,6 +45,7 @@
 			// 'core/latest-comments', // api: block-renderer/core/latest-comments
 
 	],
+	flexBlocks = [ 'core/columns', 'core/media-text' ],
 	screen_sizes = ['xs','sm','md','lg','xl'],
 	btnconfig = {
 		xs: {
@@ -78,7 +78,7 @@
 		name: 'visibility',
 		blocks: supportedBlocks,
 		register:function( props ) {
-console.log(props.name)
+
 			var _origSave = props.save,
 				_origEdit = props.edit,
 				_rmVisibilityClasses = function(classes) {
@@ -90,9 +90,7 @@ console.log(props.name)
 				_getVisibilityClasses = function( settings ) {
 					var cls = [],
 						prevHidden = null,
-						defaultDisplay = 'block';
-						// rm display classes...
-						//className = !! settings.attributes.className ? settings.attributes.className.replace(/\s?d-([\w-]+)(\s|^)/g,'') : ' ';
+						defaultDisplay = flexBlocks.indexOf(props.name) !== -1 ? 'flex' : 'block';
 
 					//
 					screen_sizes.forEach( function( size, i ) {
@@ -123,8 +121,7 @@ console.log(props.name)
 					bs_hidden_print: { type: 'boolean', default: false },
 				}),
 				save:function(settings) {
-					// add visibility classes
-
+					// adds visibility classes to outermost element
 					var ret = _origSave(settings),
 						cls = _getVisibilityClasses( settings ),
 						new_props; // can be null!
@@ -138,7 +135,6 @@ console.log(props.name)
 						className: '',
 					},ret.props);
 
-props.name === 'tiny-bootstrap/container' && console.log(ret.type,new_props)
 					_.set( new_props, ['className'], _rmVisibilityClasses( new_props.className ) + ' ' + cls );
 					return el( ret.type, new_props );
 				},
